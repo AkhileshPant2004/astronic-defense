@@ -1,0 +1,3670 @@
+/*=============================================================================
+    ASTRONIC DEFENSE
+    PART 1B-1
+    GLOBAL FOUNDATION + NAVIGATION
+=============================================================================*/
+
+/*=============================================================================
+    GOOGLE FONT VARIABLES
+=============================================================================*/
+
+:root {
+
+    --bg: #000000;
+    --bg-secondary: #030303;
+    --surface: #080808;
+    --surface-2: #0d0d0d;
+
+    --border: #171717;
+    --border-soft: #111111;
+
+    --text: #ffffff;
+    --text-secondary: #cfcfcf;
+    --text-muted: #7d7d7d;
+
+    --emerald: #10b981;
+    --emerald-soft: rgba(16, 185, 129, .12);
+
+    --crimson: #ff3333;
+    --crimson-soft: rgba(255, 51, 51, .12);
+
+    --transition: .35s cubic-bezier(.16, 1, .3, 1);
+
+    --container: 1450px;
+
+}
+
+/*=============================================================================
+    RESET
+=============================================================================*/
+
+*,
+*::before,
+*::after {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+html {
+
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+
+}
+
+body {
+
+    background: var(--bg);
+
+    color: var(--text-secondary);
+
+    font-family: "Inter", sans-serif;
+
+    font-size: 1.6rem;
+
+    overflow-x: hidden;
+
+    padding-top: 82px;
+
+}
+
+/*=============================================================================
+    SCROLLBAR
+=============================================================================*/
+
+::-webkit-scrollbar {
+
+    width: 7px;
+
+}
+
+::-webkit-scrollbar-track {
+
+    background: #000;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+    background: #161616;
+
+    border-radius: 50px;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+    background: var(--crimson);
+
+}
+
+/*=============================================================================
+    GLOBAL ELEMENTS
+=============================================================================*/
+
+img {
+
+    display: block;
+
+    max-width: 100%;
+
+}
+
+a {
+
+    text-decoration: none;
+
+}
+
+button {
+
+    border: none;
+
+    background: none;
+
+    cursor: pointer;
+
+}
+
+ul {
+
+    list-style: none;
+
+}
+
+/*=============================================================================
+    CONTAINER
+=============================================================================*/
+
+.container {
+
+    width: min(var(--container), 92%);
+
+    margin-inline: auto;
+
+}
+
+/*=============================================================================
+    NAVBAR
+=============================================================================*/
+
+nav {
+
+    position: fixed;
+
+    inset: 0 0 auto 0;
+
+    width: 100%;
+
+    height: 82px;
+
+    background: rgba(3, 3, 3, .88);
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, .05);
+
+    z-index: 1000;
+
+    transition: var(--transition);
+
+}
+
+nav::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: 0;
+
+    width: 100%;
+
+    height: 1px;
+
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 51, 51, .25),
+            transparent);
+
+}
+
+/*=============================================================================
+    NAV CONTAINER
+=============================================================================*/
+
+.nav-container {
+
+    width: min(var(--container), 92%);
+
+    height: 100%;
+
+    margin-inline: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+/*=============================================================================
+    LOGO
+=============================================================================*/
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+}
+
+.logo img {
+
+    width: 46px;
+
+    height: 46px;
+
+    object-fit: cover;
+
+    border-radius: 6px;
+
+    border: 1px solid rgba(16, 185, 129, .25);
+
+    transition: var(--transition);
+
+}
+
+.logo-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+.logo-title {
+
+    color: #fff;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.9rem;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 3px;
+
+}
+
+.logo-subtitle {
+
+    margin-top: 3px;
+
+    color: #666;
+
+    font-size: 1rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+}
+
+.logo:hover img {
+
+    border-color: var(--crimson);
+
+    box-shadow: 0 0 20px rgba(255, 51, 51, .18);
+
+    transform: scale(1.05);
+
+}
+
+.logo:hover .logo-title {
+
+    color: var(--crimson);
+
+}
+
+/*=============================================================================
+    NAVIGATION LINKS
+=============================================================================*/
+
+.nav-links {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 36px;
+
+}
+
+.nav-links a {
+
+    position: relative;
+
+    color: #909090;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.2rem;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    transition: var(--transition);
+
+}
+
+.nav-links a::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: -8px;
+
+    width: 0;
+
+    height: 2px;
+
+    background: var(--crimson);
+
+    transform: translateX(-50%);
+
+    transition: var(--transition);
+
+}
+
+.nav-links a:hover {
+
+    color: #fff;
+
+    letter-spacing: 2.5px;
+
+}
+
+.nav-links a:hover::after {
+
+    width: 100%;
+
+}
+
+.nav-links a.active {
+
+    color: #fff;
+
+}
+
+.nav-links a.active::after {
+
+    width: 100%;
+
+    background: var(--emerald);
+
+}
+
+/*=============================================================================
+    MENU BUTTON
+=============================================================================*/
+
+.menu-button {
+
+    display: none;
+
+    width: 42px;
+
+    height: 42px;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 6px;
+
+}
+
+.menu-button span {
+
+    width: 24px;
+
+    height: 2px;
+
+    background: #fff;
+
+    transition: var(--transition);
+
+}
+
+/*=============================================================================
+    NAVBAR EFFECT
+=============================================================================*/
+
+nav:hover {
+
+    border-bottom: 1px solid rgba(255, 51, 51, .15);
+
+    box-shadow:
+
+        0 20px 50px rgba(0, 0, 0, .8),
+
+        0 0 30px rgba(255, 51, 51, .04);
+
+}
+
+/*=============================================================================
+    RESPONSIVE
+=============================================================================*/
+
+@media(max-width:1200px) {
+
+    .nav-links {
+
+        gap: 24px;
+
+    }
+
+}
+
+@media(max-width:980px) {
+
+    .nav-links {
+
+        display: none;
+
+    }
+
+    .menu-button {
+
+        display: flex;
+
+    }
+
+    .logo-title {
+
+        font-size: 1.6rem;
+
+    }
+
+    .logo-subtitle {
+
+        font-size: .9rem;
+
+    }
+
+}
+
+@media(max-width:600px) {
+
+    body {
+
+        padding-top: 74px;
+
+    }
+
+    nav {
+
+        height: 74px;
+
+    }
+
+    .logo img {
+
+        width: 40px;
+
+        height: 40px;
+
+    }
+
+    .logo-title {
+
+        font-size: 1.4rem;
+
+        letter-spacing: 2px;
+
+    }
+
+    .logo-subtitle {
+
+        display: none;
+
+    }
+
+}
+
+
+/*=============================================================================
+    ASTRONIC DEFENSE
+    PART 1B-2A
+    HERO SECTION
+=============================================================================*/
+
+/*=============================================================================
+    HERO SECTION
+=============================================================================*/
+
+#aerospace-core {
+
+    position: relative;
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at center,
+            rgba(12, 12, 12, .65) 0%,
+            rgba(0, 0, 0, .95) 65%,
+            #000 100%);
+
+}
+
+/*=============================================================================
+    RADAR CANVAS
+=============================================================================*/
+
+#droneRadarCanvas {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    z-index: 1;
+
+    opacity: .38;
+
+    pointer-events: none;
+
+}
+
+/*=============================================================================
+    HERO OVERLAY
+=============================================================================*/
+
+.hero-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    background:
+
+        linear-gradient(rgba(0, 0, 0, .55),
+            rgba(0, 0, 0, .82)),
+
+        linear-gradient(90deg,
+            rgba(255, 51, 51, .03),
+            transparent 28%,
+            transparent 72%,
+            rgba(16, 185, 129, .03));
+
+}
+
+/*=============================================================================
+    GRID LINES
+=============================================================================*/
+
+.hero-overlay::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+
+        linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
+
+        linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
+
+    background-size: 50px 50px;
+
+    opacity: .55;
+
+}
+
+/*=============================================================================
+    VIGNETTE
+=============================================================================*/
+
+.hero-overlay::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        radial-gradient(circle,
+            transparent 35%,
+            rgba(0, 0, 0, .35) 72%,
+            rgba(0, 0, 0, .82) 100%);
+
+}
+
+/*=============================================================================
+    HERO CONTAINER
+=============================================================================*/
+
+.hero-container {
+
+    position: relative;
+
+    z-index: 5;
+
+    width: min(var(--container), 92%);
+
+    margin-inline: auto;
+
+    display: grid;
+
+    grid-template-columns: 1.5fr .75fr;
+
+    align-items: center;
+
+    gap: 80px;
+
+}
+
+/*=============================================================================
+    HERO CONTENT
+=============================================================================*/
+
+.hero-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+}
+
+/*=============================================================================
+    META
+=============================================================================*/
+
+.hero-meta {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 30px;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.2rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 4px;
+
+    color: var(--emerald);
+
+}
+
+/*=============================================================================
+    STATUS DOT
+=============================================================================*/
+
+.status-dot {
+
+    width: 10px;
+
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: var(--emerald);
+
+    box-shadow:
+
+        0 0 10px rgba(16, 185, 129, .55),
+
+        0 0 18px rgba(16, 185, 129, .35);
+
+    animation: statusPulse 2s infinite;
+
+}
+
+@keyframes statusPulse {
+
+    0% {
+
+        transform: scale(1);
+
+        opacity: 1;
+
+    }
+
+    50% {
+
+        transform: scale(1.4);
+
+        opacity: .55;
+
+    }
+
+    100% {
+
+        transform: scale(1);
+
+        opacity: 1;
+
+    }
+
+}
+
+/*=============================================================================
+    MAIN TITLE
+=============================================================================*/
+
+.hero-content h1 {
+
+    color: #fff;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: clamp(4.8rem, 7vw, 8rem);
+
+    font-weight: 800;
+
+    line-height: 1.05;
+
+    text-transform: uppercase;
+
+    letter-spacing: -2px;
+
+    margin-bottom: 32px;
+
+    max-width: 900px;
+
+}
+
+/*=============================================================================
+    DESCRIPTION
+=============================================================================*/
+
+.hero-content p {
+
+    max-width: 760px;
+
+    color: var(--text-muted);
+
+    font-size: 1.75rem;
+
+    line-height: 1.9;
+
+    margin-bottom: 42px;
+
+}
+
+/*=============================================================================
+    LEFT BORDER
+=============================================================================*/
+
+.hero-content {
+
+    border-left: 2px solid rgba(16, 185, 129, .45);
+
+    padding-left: 32px;
+
+}
+
+/*=============================================================================
+    TERMINAL TAG
+=============================================================================*/
+
+.hero-meta span:last-child {
+
+    position: relative;
+
+}
+
+.hero-meta span:last-child::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: -8px;
+
+    width: 120px;
+
+    height: 1px;
+
+    background: rgba(16, 185, 129, .4);
+
+}
+
+/*=============================================================================
+    RESPONSIVE
+=============================================================================*/
+
+@media(max-width:1200px) {
+
+    .hero-container {
+
+        gap: 60px;
+
+    }
+
+}
+
+@media(max-width:980px) {
+
+    .hero-container {
+
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+
+    }
+
+    .hero-content {
+
+        padding-left: 24px;
+
+    }
+
+    .hero-content h1 {
+
+        font-size: 5rem;
+
+    }
+
+}
+
+@media(max-width:768px) {
+
+    #aerospace-core {
+
+        padding: 100px 0 80px;
+
+        min-height: auto;
+
+    }
+
+    .hero-content {
+
+        padding-left: 18px;
+
+    }
+
+    .hero-content h1 {
+
+        font-size: 4rem;
+
+        line-height: 1.12;
+
+    }
+
+    .hero-content p {
+
+        font-size: 1.6rem;
+
+    }
+
+    .hero-meta {
+
+        letter-spacing: 2px;
+
+        font-size: 1rem;
+
+    }
+
+}
+
+@media(max-width:500px) {
+
+    .hero-content {
+
+        border-left: 1px solid rgba(16, 185, 129, .45);
+
+        padding-left: 16px;
+
+    }
+
+    .hero-content h1 {
+
+        font-size: 3.3rem;
+
+    }
+
+    .hero-content p {
+
+        font-size: 1.45rem;
+
+        line-height: 1.8;
+
+    }
+
+}
+
+/*=============================================================================
+    ASTRONIC DEFENSE
+    PART 1B-2B
+    HERO PANELS • BUTTONS • MICRO INTERACTIONS
+=============================================================================*/
+
+
+/*=============================================================================
+    HERO ACTION BUTTONS
+=============================================================================*/
+
+.hero-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+
+}
+
+
+/*=============================================================================
+    PRIMARY BUTTON
+=============================================================================*/
+
+.primary-btn {
+
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 220px;
+
+    height: 56px;
+
+    padding: 0 34px;
+
+    overflow: hidden;
+
+    background: #101010;
+
+    border: 1px solid rgba(16, 185, 129, .35);
+
+    color: #ffffff;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.25rem;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    transition: all .35s cubic-bezier(.16, 1, .3, 1);
+
+}
+
+.primary-btn::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(16, 185, 129, .18),
+            transparent);
+
+    transform: translateX(-100%);
+
+    transition: .7s;
+
+}
+
+.primary-btn:hover::before {
+
+    transform: translateX(100%);
+
+}
+
+.primary-btn:hover {
+
+    background: #131313;
+
+    border-color: #10b981;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 0 30px rgba(16, 185, 129, .12),
+        0 15px 40px rgba(0, 0, 0, .5);
+
+}
+
+
+/*=============================================================================
+    SECONDARY BUTTON
+=============================================================================*/
+
+.secondary-btn {
+
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 240px;
+
+    height: 56px;
+
+    padding: 0 34px;
+
+    border: 1px solid rgba(255, 255, 255, .08);
+
+    background: transparent;
+
+    color: #9a9a9a;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.25rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    transition: .35s;
+
+}
+
+.secondary-btn:hover {
+
+    color: #ffffff;
+
+    border-color: #ff3333;
+
+    background: rgba(255, 51, 51, .04);
+
+    transform: translateY(-4px);
+
+}
+
+
+/*=============================================================================
+    COMMAND PANEL
+=============================================================================*/
+
+.hero-panel {
+
+    position: relative;
+
+    background: rgba(7, 7, 7, .92);
+
+    border: 1px solid #181818;
+
+    backdrop-filter: blur(14px);
+
+    padding: 32px;
+
+    overflow: hidden;
+
+    transition: .35s;
+
+}
+
+.hero-panel::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 2px;
+
+    background: linear-gradient(90deg,
+            transparent,
+            #10b981,
+            transparent);
+
+}
+
+.hero-panel:hover {
+
+    border-color: #10b981;
+
+    transform: translateY(-6px);
+
+    box-shadow:
+
+        0 0 40px rgba(16, 185, 129, .08),
+
+        0 20px 60px rgba(0, 0, 0, .55);
+
+}
+
+
+/*=============================================================================
+    PANEL HEADER
+=============================================================================*/
+
+.panel-header {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.25rem;
+
+    color: #10b981;
+
+    text-transform: uppercase;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 28px;
+
+    padding-bottom: 16px;
+
+    border-bottom: 1px solid #151515;
+
+}
+
+
+/*=============================================================================
+    PANEL BODY
+=============================================================================*/
+
+.panel-body {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+
+}
+
+
+/*=============================================================================
+    PANEL ROW
+=============================================================================*/
+
+.panel-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid rgba(255, 255, 255, .04);
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.2rem;
+
+    letter-spacing: 1.5px;
+
+    color: #7b7b7b;
+
+    transition: .35s;
+
+}
+
+.panel-row:hover {
+
+    padding-left: 10px;
+
+    color: #ffffff;
+
+}
+
+.panel-row:last-child {
+
+    border-bottom: none;
+
+}
+
+
+/*=============================================================================
+    STATUS
+=============================================================================*/
+
+.green {
+
+    color: #10b981;
+
+    font-weight: 700;
+
+}
+
+.red {
+
+    color: #ff3333;
+
+}
+
+
+/*=============================================================================
+    PANEL FOOTER
+=============================================================================*/
+
+.panel-footer {
+
+    margin-top: 30px;
+
+    padding-top: 22px;
+
+    border-top: 1px solid #151515;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.05rem;
+
+    color: #5f5f5f;
+
+    text-transform: uppercase;
+
+    letter-spacing: 3px;
+
+}
+
+
+/*=============================================================================
+    SCROLL INDICATOR
+=============================================================================*/
+
+.scroll-indicator {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 38px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 10px;
+
+    z-index: 10;
+
+}
+
+.scroll-indicator span {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1rem;
+
+    color: #666666;
+
+    letter-spacing: 5px;
+
+    text-transform: uppercase;
+
+}
+
+.scroll-indicator::after {
+
+    content: "";
+
+    width: 1px;
+
+    height: 50px;
+
+    background: linear-gradient(to bottom,
+
+            #10b981,
+
+            transparent);
+
+    animation: scrollSignal 2s infinite;
+
+}
+
+@keyframes scrollSignal {
+
+    0% {
+
+        opacity: 0;
+
+        transform: translateY(-10px);
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform: translateY(15px);
+
+    }
+
+}
+
+
+/*=============================================================================
+    HERO AMBIENT GLOW
+=============================================================================*/
+
+#aerospace-core::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -250px;
+
+    right: -250px;
+
+    width: 500px;
+
+    height: 500px;
+
+    border-radius: 50%;
+
+    background: radial-gradient(circle,
+
+            rgba(16, 185, 129, .08),
+
+            transparent 72%);
+
+    filter: blur(40px);
+
+    animation: ambientFloat 12s linear infinite;
+
+}
+
+#aerospace-core::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: -250px;
+
+    left: -250px;
+
+    width: 500px;
+
+    height: 500px;
+
+    border-radius: 50%;
+
+    background: radial-gradient(circle,
+
+            rgba(255, 51, 51, .05),
+
+            transparent 70%);
+
+    filter: blur(50px);
+
+    animation: ambientFloatReverse 15s linear infinite;
+
+}
+
+
+/*=============================================================================
+    ANIMATIONS
+=============================================================================*/
+
+@keyframes ambientFloat {
+
+    0% {
+
+        transform: translate(0, 0);
+
+    }
+
+    50% {
+
+        transform: translate(-40px, 40px);
+
+    }
+
+    100% {
+
+        transform: translate(0, 0);
+
+    }
+
+}
+
+@keyframes ambientFloatReverse {
+
+    0% {
+
+        transform: translate(0, 0);
+
+    }
+
+    50% {
+
+        transform: translate(40px, -30px);
+
+    }
+
+    100% {
+
+        transform: translate(0, 0);
+
+    }
+
+}
+
+
+/*=============================================================================
+    RESPONSIVE
+=============================================================================*/
+
+@media(max-width:980px) {
+
+    .hero-actions {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    .primary-btn,
+    .secondary-btn {
+
+        width: 100%;
+
+    }
+
+    .hero-panel {
+
+        max-width: 650px;
+
+    }
+
+}
+
+@media(max-width:768px) {
+
+    .hero-panel {
+
+        padding: 24px;
+
+    }
+
+    .panel-header {
+
+        font-size: 1.1rem;
+
+    }
+
+    .panel-row {
+
+        font-size: 1.05rem;
+
+    }
+
+    .scroll-indicator {
+
+        display: none;
+
+    }
+
+}
+
+/*=============================================================================
+    ASTRONIC DEFENSE
+    PART 2A
+    NAV STATES + MOBILE MENU
+=============================================================================*/
+
+nav.nav-scrolled {
+
+    background: rgba(0, 0, 0, .94);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .6);
+
+}
+
+body.no-scroll {
+
+    overflow: hidden;
+
+}
+
+.menu-button-active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-button-active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-button-active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+@media(max-width:980px) {
+
+    .nav-links {
+
+        position: fixed;
+        inset: 74px 0 0 0;
+        height: calc(100dvh - 74px);
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 0;
+
+        background: rgba(0, 0, 0, .98);
+        border-top: 1px solid var(--border);
+
+        transform: translateX(100%);
+        transition: transform .45s cubic-bezier(.16, 1, .3, 1);
+
+        overflow-y: auto;
+        padding: 12px 0;
+
+    }
+
+    .nav-links.nav-links-open {
+
+        transform: translateX(0);
+
+    }
+
+    .nav-links li {
+
+        width: 100%;
+
+    }
+
+    .nav-links a {
+
+        display: block;
+
+        width: 100%;
+
+        padding: 20px 28px;
+
+        font-size: 1.6rem;
+
+        border-bottom: 1px solid var(--border-soft);
+
+    }
+
+    .nav-links a::after {
+
+        display: none;
+
+    }
+
+}
+
+/*=============================================================================
+    PART 2B
+    SCROLL REVEAL / SECTION SYSTEM
+=============================================================================*/
+
+[data-reveal] {
+
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .8s cubic-bezier(.16, 1, .3, 1),
+        transform .8s cubic-bezier(.16, 1, .3, 1);
+
+}
+
+[data-reveal].is-revealed {
+
+    opacity: 1;
+    transform: translateY(0);
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    [data-reveal] {
+
+        opacity: 1;
+        transform: none;
+        transition: none;
+
+    }
+
+}
+
+/*=============================================================================
+    SECTION SHELL
+=============================================================================*/
+
+.section {
+
+    position: relative;
+
+    padding: 140px 0;
+
+    border-bottom: 1px solid var(--border-soft);
+
+}
+
+.section-alt {
+
+    background: var(--bg-secondary);
+
+}
+
+.section-head {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 40px;
+
+    margin-bottom: 70px;
+
+    flex-wrap: wrap;
+
+}
+
+.section-eyebrow {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.2rem;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+
+    color: var(--crimson);
+
+    margin-bottom: 20px;
+
+}
+
+.section-eyebrow::before {
+
+    content: "";
+
+    width: 26px;
+
+    height: 1px;
+
+    background: var(--crimson);
+
+}
+
+.section-title {
+
+    color: #fff;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: clamp(3rem, 4vw, 4.6rem);
+
+    font-weight: 700;
+
+    letter-spacing: -1px;
+
+    text-transform: uppercase;
+
+    max-width: 720px;
+
+    line-height: 1.15;
+
+}
+
+.section-desc {
+
+    max-width: 480px;
+
+    color: var(--text-muted);
+
+    font-size: 1.5rem;
+
+    line-height: 1.85;
+
+}
+
+.section-index {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.1rem;
+
+    color: #4a4a4a;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+}
+
+@media(max-width:768px) {
+
+    .section {
+
+        padding: 90px 0;
+
+    }
+
+    .section-head {
+
+        margin-bottom: 48px;
+
+    }
+
+}
+
+/*=============================================================================
+    ASTRONIC DEFENSE
+    PART 3
+    FOUNDER COMMAND BRIEF
+=============================================================================*/
+
+#founder-brief .container {
+
+    display: grid;
+
+    grid-template-columns: .85fr 1.15fr;
+
+    gap: 90px;
+
+    align-items: center;
+
+}
+
+.founder-portrait {
+
+    position: relative;
+
+    aspect-ratio: 4 / 5;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+.founder-portrait img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    filter: grayscale(1) contrast(1.1);
+
+    transition: var(--transition);
+
+}
+
+.founder-portrait:hover img {
+
+    filter: grayscale(.2) contrast(1.05);
+
+    transform: scale(1.04);
+
+}
+
+.founder-portrait::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, .9) 100%);
+
+    z-index: 2;
+
+    pointer-events: none;
+
+}
+
+.founder-tag {
+
+    position: absolute;
+
+    left: 20px;
+
+    bottom: 20px;
+
+    z-index: 3;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.1rem;
+
+    color: var(--emerald);
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+}
+
+.founder-tag span {
+
+    display: block;
+
+    color: #888;
+
+    font-size: 1rem;
+
+    margin-top: 4px;
+
+}
+
+.founder-content .section-eyebrow {
+
+    margin-bottom: 22px;
+
+}
+
+.founder-quote {
+
+    color: #fff;
+
+    font-family: "Inter", sans-serif;
+
+    font-weight: 500;
+
+    font-size: 2.4rem;
+
+    line-height: 1.5;
+
+    margin-bottom: 30px;
+
+    border-left: 2px solid var(--emerald);
+
+    padding-left: 26px;
+
+}
+
+.founder-bio {
+
+    color: var(--text-muted);
+
+    font-size: 1.5rem;
+
+    line-height: 1.9;
+
+    max-width: 620px;
+
+    margin-bottom: 40px;
+
+}
+
+.founder-meta-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 1px;
+
+    background: var(--border);
+
+    border: 1px solid var(--border);
+
+}
+
+.founder-meta-cell {
+
+    background: var(--bg);
+
+    padding: 20px 22px;
+
+}
+
+.founder-meta-cell .meta-label {
+
+    display: block;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1rem;
+
+    color: #666;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+
+}
+
+.founder-meta-cell .meta-value {
+
+    display: block;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.7rem;
+
+    font-weight: 700;
+
+    color: var(--emerald);
+
+}
+
+@media(max-width:980px) {
+
+    #founder-brief .container {
+
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+
+    }
+
+    .founder-portrait {
+
+        max-width: 420px;
+
+    }
+
+}
+
+@media(max-width:600px) {
+
+    .founder-meta-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .founder-quote {
+
+        font-size: 1.9rem;
+
+    }
+
+}
+
+/*=============================================================================
+    ASTRONIC DEFENSE
+    PART 4
+    DEFENSE CAPABILITY MATRIX
+=============================================================================*/
+
+.capability-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 1px;
+
+    background: var(--border);
+
+    border: 1px solid var(--border);
+
+}
+
+.capability-card {
+
+    position: relative;
+
+    background: var(--bg);
+
+    padding: 44px 38px;
+
+    transition: var(--transition);
+
+    overflow: hidden;
+
+}
+
+.capability-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 0;
+
+    height: 2px;
+
+    background: var(--emerald);
+
+    transition: width .5s cubic-bezier(.16, 1, .3, 1);
+
+}
+
+.capability-card:hover {
+
+    background: var(--surface);
+
+}
+
+.capability-card:hover::before {
+
+    width: 100%;
+
+}
+
+.capability-index {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.1rem;
+
+    color: var(--crimson);
+
+    letter-spacing: 2px;
+
+    margin-bottom: 26px;
+
+    display: block;
+
+}
+
+.capability-icon {
+
+    width: 44px;
+
+    height: 44px;
+
+    margin-bottom: 26px;
+
+    color: var(--emerald);
+
+}
+
+.capability-icon svg {
+
+    width: 100%;
+
+    height: 100%;
+
+    stroke: currentColor;
+
+    fill: none;
+
+    stroke-width: 1.4;
+
+}
+
+.capability-card h3 {
+
+    color: #fff;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.9rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 16px;
+
+}
+
+.capability-card p {
+
+    color: var(--text-muted);
+
+    font-size: 1.4rem;
+
+    line-height: 1.8;
+
+    margin-bottom: 22px;
+
+}
+
+.capability-tags {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+}
+
+.capability-tags span {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1rem;
+
+    color: #808080;
+
+    border: 1px solid var(--border);
+
+    padding: 5px 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+}
+
+@media(max-width:980px) {
+
+    .capability-grid {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+}
+
+@media(max-width:640px) {
+
+    .capability-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .capability-card {
+
+        padding: 36px 28px;
+
+    }
+
+}
+
+/*=============================================================================
+    ASTRONIC DEFENSE
+    PART 5
+    RESEARCH PROGRAMS
+=============================================================================*/
+
+.research-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    border-top: 1px solid var(--border);
+
+}
+
+.research-item {
+
+    display: grid;
+
+    grid-template-columns: 100px 1fr 200px 160px;
+
+    align-items: center;
+
+    gap: 30px;
+
+    padding: 32px 0;
+
+    border-bottom: 1px solid var(--border);
+
+    transition: var(--transition);
+
+}
+
+.research-item:hover {
+
+    background: var(--surface);
+
+    padding-inline: 20px;
+
+}
+
+.research-id {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.3rem;
+
+    color: #555;
+
+    letter-spacing: 1px;
+
+}
+
+.research-info h3 {
+
+    color: #fff;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.9rem;
+
+    text-transform: uppercase;
+
+    margin-bottom: 8px;
+
+    letter-spacing: .5px;
+
+}
+
+.research-info p {
+
+    color: var(--text-muted);
+
+    font-size: 1.4rem;
+
+    line-height: 1.7;
+
+    max-width: 560px;
+
+}
+
+.research-domain {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.1rem;
+
+    color: var(--text-secondary);
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.5px;
+
+}
+
+.research-status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.1rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.5px;
+
+    justify-self: start;
+
+    padding: 8px 14px;
+
+    border: 1px solid var(--border);
+
+}
+
+.research-status::before {
+
+    content: "";
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+}
+
+.research-status[data-status="active"] {
+
+    color: var(--emerald);
+
+    border-color: rgba(16, 185, 129, .3);
+
+}
+
+.research-status[data-status="active"]::before {
+
+    background: var(--emerald);
+
+    box-shadow: 0 0 8px rgba(16, 185, 129, .6);
+
+}
+
+.research-status[data-status="classified"] {
+
+    color: var(--crimson);
+
+    border-color: rgba(255, 51, 51, .3);
+
+}
+
+.research-status[data-status="classified"]::before {
+
+    background: var(--crimson);
+
+    box-shadow: 0 0 8px rgba(255, 51, 51, .6);
+
+}
+
+.research-status[data-status="prototype"] {
+
+    color: #d8b34a;
+
+    border-color: rgba(216, 179, 74, .3);
+
+}
+
+.research-status[data-status="prototype"]::before {
+
+    background: #d8b34a;
+
+    box-shadow: 0 0 8px rgba(216, 179, 74, .5);
+
+}
+
+@media(max-width:980px) {
+
+    .research-item {
+
+        grid-template-columns: 60px 1fr;
+
+        row-gap: 14px;
+
+    }
+
+    .research-domain,
+    .research-status {
+
+        grid-column: 2;
+
+    }
+
+}
+
+/*=============================================================================
+    ASTRONIC DEFENSE
+    PART 6
+    TECHNOLOGY STACK
+=============================================================================*/
+
+.stack-groups {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 44px;
+
+}
+
+.stack-group h4 {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.2rem;
+
+    color: var(--emerald);
+
+    text-transform: uppercase;
+
+    letter-spacing: 2.5px;
+
+    margin-bottom: 24px;
+
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid var(--border);
+
+}
+
+.stack-group ul {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+}
+
+.stack-group li {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.4rem;
+
+    color: var(--text-secondary);
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid var(--border-soft);
+
+    transition: var(--transition);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+.stack-group li:hover {
+
+    color: #fff;
+
+    padding-left: 8px;
+
+}
+
+.stack-group li span {
+
+    font-size: 1rem;
+
+    color: #555;
+
+    letter-spacing: 1px;
+
+}
+
+@media(max-width:980px) {
+
+    .stack-groups {
+
+        grid-template-columns: repeat(2, 1fr);
+
+        row-gap: 44px;
+
+    }
+
+}
+
+@media(max-width:560px) {
+
+    .stack-groups {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+/*=============================================================================
+    ASTRONIC DEFENSE
+    PART 7
+    TELEMETRY DASHBOARD
+=============================================================================*/
+
+.telemetry-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 1px;
+
+    background: var(--border);
+
+    border: 1px solid var(--border);
+
+    margin-bottom: 1px;
+
+}
+
+.telemetry-card {
+
+    background: var(--bg);
+
+    padding: 30px 30px 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+.telemetry-card-head {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    margin-bottom: 18px;
+
+}
+
+.telemetry-label {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.15rem;
+
+    color: #999;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+}
+
+.telemetry-value {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 2.2rem;
+
+    font-weight: 700;
+
+    color: #fff;
+
+}
+
+.telemetry-unit {
+
+    font-size: 1.2rem;
+
+    color: #666;
+
+    margin-left: 4px;
+
+}
+
+.telemetry-canvas-wrap {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 130px;
+
+}
+
+.telemetry-canvas-wrap canvas {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+.telemetry-gauges {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 1px;
+
+    background: var(--border);
+
+    border: 1px solid var(--border);
+
+    border-top: none;
+
+}
+
+.gauge-card {
+
+    background: var(--bg);
+
+    padding: 34px 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 24px;
+
+}
+
+.gauge-svg {
+
+    width: 96px;
+
+    height: 96px;
+
+    flex-shrink: 0;
+
+    transform: rotate(-90deg);
+
+}
+
+.gauge-track {
+
+    fill: none;
+
+    stroke: var(--border);
+
+    stroke-width: 6;
+
+}
+
+.gauge-value-ring {
+
+    fill: none;
+
+    stroke: var(--emerald);
+
+    stroke-width: 6;
+
+    stroke-linecap: round;
+
+    transition: stroke-dashoffset .3s ease;
+
+}
+
+.gauge-card[data-tone="crimson"] .gauge-value-ring {
+
+    stroke: var(--crimson);
+
+}
+
+.gauge-value-label {
+
+    position: absolute;
+
+}
+
+.gauge-text-wrap {
+
+    position: relative;
+
+    width: 96px;
+
+    height: 96px;
+
+}
+
+.gauge-value-label {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+    color: #fff;
+
+}
+
+.gauge-meta h4 {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.3rem;
+
+    color: #fff;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 6px;
+
+}
+
+.gauge-meta p {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.1rem;
+
+    color: #666;
+
+    letter-spacing: .5px;
+
+}
+
+@media(max-width:980px) {
+
+    .telemetry-grid,
+    .telemetry-gauges {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+/*=============================================================================
+    ASTRONIC DEFENSE
+    PART 8
+    OPERATIONAL TIMELINE
+=============================================================================*/
+
+.timeline {
+
+    position: relative;
+
+    max-width: 920px;
+
+}
+
+.timeline::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 120px;
+
+    top: 0;
+
+    bottom: 0;
+
+    width: 1px;
+
+    background: var(--border);
+
+}
+
+.timeline-item {
+
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns: 120px 1fr;
+
+    gap: 40px;
+
+    padding-bottom: 64px;
+
+    opacity: .35;
+
+    transition: opacity .5s ease;
+
+}
+
+.timeline-item:last-child {
+
+    padding-bottom: 0;
+
+}
+
+.timeline-item-active {
+
+    opacity: 1;
+
+}
+
+.timeline-date {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.3rem;
+
+    color: var(--emerald);
+
+    letter-spacing: 1px;
+
+    padding-top: 3px;
+
+}
+
+.timeline-node {
+
+    position: absolute;
+
+    left: 116px;
+
+    top: 6px;
+
+    width: 9px;
+
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: var(--bg);
+
+    border: 2px solid var(--border);
+
+    transition: var(--transition);
+
+}
+
+.timeline-item-active .timeline-node {
+
+    background: var(--emerald);
+
+    border-color: var(--emerald);
+
+    box-shadow: 0 0 12px rgba(16, 185, 129, .5);
+
+}
+
+.timeline-content {
+
+    padding-left: 34px;
+
+    border-left: 1px solid var(--border-soft);
+
+}
+
+.timeline-content h3 {
+
+    color: #fff;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.9rem;
+
+    text-transform: uppercase;
+
+    margin-bottom: 12px;
+
+    letter-spacing: .5px;
+
+}
+
+.timeline-content p {
+
+    color: var(--text-muted);
+
+    font-size: 1.4rem;
+
+    line-height: 1.8;
+
+    max-width: 560px;
+
+}
+
+@media(max-width:768px) {
+
+    .timeline::before {
+
+        left: 30px;
+
+    }
+
+    .timeline-item {
+
+        grid-template-columns: 1fr;
+
+        gap: 8px;
+
+    }
+
+    .timeline-node {
+
+        left: 26px;
+
+    }
+
+    .timeline-date {
+
+        padding-left: 34px;
+
+    }
+
+    .timeline-content {
+
+        padding-left: 34px;
+
+    }
+
+}
+
+/*=============================================================================
+    ASTRONIC DEFENSE
+    PART 9
+    STRATEGIC PARTNERS
+=============================================================================*/
+
+.partners-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 1px;
+
+    background: var(--border);
+
+    border: 1px solid var(--border);
+
+}
+
+.partner-cell {
+
+    background: var(--bg);
+
+    aspect-ratio: 1.6;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    transition: var(--transition);
+
+}
+
+.partner-cell:hover {
+
+    background: var(--surface);
+
+}
+
+.partner-cell span {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.3rem;
+
+    color: #555;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    text-align: center;
+
+    transition: var(--transition);
+
+}
+
+.partner-cell:hover span {
+
+    color: var(--emerald);
+
+}
+
+@media(max-width:980px) {
+
+    .partners-grid {
+
+        grid-template-columns: repeat(3, 1fr);
+
+    }
+
+}
+
+@media(max-width:600px) {
+
+    .partners-grid {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+}
+
+/*=============================================================================
+    ASTRONIC DEFENSE
+    PART 10
+    CONTACT
+=============================================================================*/
+
+#contact .container {
+
+    display: grid;
+
+    grid-template-columns: .9fr 1.1fr;
+
+    gap: 90px;
+
+}
+
+.contact-info-block {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 40px;
+
+}
+
+.contact-detail .meta-label {
+
+    display: block;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.1rem;
+
+    color: #666;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 10px;
+
+}
+
+.contact-detail .meta-value {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.9rem;
+
+    color: #fff;
+
+}
+
+.contact-detail a.meta-value {
+
+    transition: var(--transition);
+
+}
+
+.contact-detail a.meta-value:hover {
+
+    color: var(--emerald);
+
+}
+
+.contact-form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 22px;
+
+}
+
+.form-row {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 22px;
+
+}
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+.form-group label {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.1rem;
+
+    color: #999;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    color: #fff;
+
+    font-family: "Inter", sans-serif;
+
+    font-size: 1.45rem;
+
+    padding: 15px 16px;
+
+    transition: var(--transition);
+
+    width: 100%;
+
+}
+
+.form-group textarea {
+
+    resize: vertical;
+
+    min-height: 130px;
+
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+
+    outline: none;
+
+    border-color: var(--emerald);
+
+    background: #0c0c0c;
+
+}
+
+.form-group-error input,
+.form-group-error textarea,
+.form-group-error select {
+
+    border-color: var(--crimson);
+
+}
+
+.form-submit-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 24px;
+
+    margin-top: 8px;
+
+    flex-wrap: wrap;
+
+}
+
+.form-status {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.15rem;
+
+    letter-spacing: 1px;
+
+    color: #666;
+
+}
+
+.form-status[data-state="pending"] {
+
+    color: #d8b34a;
+
+}
+
+.form-status[data-state="success"] {
+
+    color: var(--emerald);
+
+}
+
+.form-status[data-state="error"] {
+
+    color: var(--crimson);
+
+}
+
+@media(max-width:980px) {
+
+    #contact .container {
+
+        grid-template-columns: 1fr;
+
+        gap: 60px;
+
+    }
+
+}
+
+@media(max-width:560px) {
+
+    .form-row {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+/*=============================================================================
+    ASTRONIC DEFENSE
+    PART 11
+    FOOTER
+=============================================================================*/
+
+footer {
+
+    background: var(--bg-secondary);
+
+    padding: 90px 0 40px;
+
+}
+
+.footer-top {
+
+    display: grid;
+
+    grid-template-columns: 1.4fr repeat(3, .85fr);
+
+    gap: 60px;
+
+    padding-bottom: 60px;
+
+    border-bottom: 1px solid var(--border-soft);
+
+}
+
+.footer-brand .logo-title {
+
+    font-size: 1.9rem;
+
+}
+
+.footer-brand p {
+
+    margin-top: 20px;
+
+    color: var(--text-muted);
+
+    font-size: 1.4rem;
+
+    line-height: 1.8;
+
+    max-width: 340px;
+
+}
+
+.footer-col h5 {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.15rem;
+
+    color: #fff;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 22px;
+
+}
+
+.footer-col ul {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+}
+
+.footer-col a {
+
+    font-size: 1.4rem;
+
+    color: var(--text-muted);
+
+    transition: var(--transition);
+
+}
+
+.footer-col a:hover {
+
+    color: var(--emerald);
+
+    padding-left: 4px;
+
+}
+
+.footer-bottom {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding-top: 34px;
+
+    flex-wrap: wrap;
+
+    gap: 16px;
+
+}
+
+.footer-bottom p {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.1rem;
+
+    color: #555;
+
+    letter-spacing: 1px;
+
+}
+
+.footer-socials {
+
+    display: flex;
+
+    gap: 18px;
+
+}
+
+.footer-socials a {
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 1.1rem;
+
+    color: #666;
+
+    letter-spacing: 1px;
+
+    transition: var(--transition);
+
+}
+
+.footer-socials a:hover {
+
+    color: var(--crimson);
+
+}
+
+/*=========================
+MISSION CONTACT
+=========================*/
+
+.contact-terminal {
+    padding: 100px 0;
+}
+
+.terminal-wrapper {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.terminal-info {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.terminal-card,
+.contact-card,
+.mission-form {
+    background: #101522;
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 16px;
+    padding: 25px;
+}
+
+.terminal-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 30px;
+    background: #1b2435;
+    color: #66e0ff;
+    font-size: .8rem;
+    margin-bottom: 15px;
+}
+
+.terminal-card h3 {
+    margin: 10px 0;
+}
+
+.terminal-card p {
+    color: #a6b2c8;
+    line-height: 1.7;
+}
+
+.contact-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: #fff;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.contact-card:hover {
+    transform: translateY(-4px);
+    border-color: #4fd7ff;
+}
+
+.card-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    background: #182131;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-icon svg {
+    width: 28px;
+    height: 28px;
+    color: #4fd7ff;
+}
+
+.contact-card span {
+    display: block;
+    font-size: .8rem;
+    color: #97a4bc;
+}
+
+.contact-card strong {
+    font-size: .95rem;
+}
+
+.terminal-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8fe98f;
+    font-size: .85rem;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #2ecc71;
+}
+
+.mission-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-size: .9rem;
+    color: #d8dee9;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    background: #182131;
+    border: 1px solid rgba(255, 255, 255, .08);
+    color: #fff;
+    padding: 14px;
+    border-radius: 10px;
+    outline: none;
+    transition: .3s;
+    font-size: .95rem;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #4fd7ff;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 170px;
+}
+
+.button-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.primary-btn {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: .95rem;
+    font-weight: 600;
+    color: #fff;
+    background: #146cff;
+    transition: .3s;
+}
+
+.primary-btn:hover {
+    transform: translateY(-3px);
+}
+
+.whatsapp-btn {
+    background: #1fa855;
+}
+
+.form-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #9fb0c8;
+    font-size: .9rem;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #2ecc71;
+}
+
+@media(max-width:991px) {
+
+    .terminal-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media(max-width:768px) {
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+}
+
+@media(max-width:980px) {
+
+    .footer-top {
+
+        grid-template-columns: 1fr 1fr;
+
+        row-gap: 44px;
+
+    }
+
+}
+
+@media(max-width:600px) {
+
+    .footer-top {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .footer-bottom {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+}
