@@ -720,26 +720,34 @@ class TargetPool {
     CONTACT FORM — WHATSAPP / EMAIL DISPATCH
 =============================================================================*/
 
-const whatsappBtn = document.getElementById("whatsappBtn");
-const emailBtn = document.getElementById("emailBtn");
+function initContactDispatch() {
 
-function getFormData() {
-    return {
-        organization: document.getElementById("organization").value.trim(),
-        name: document.getElementById("name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        phone: document.getElementById("phone").value.trim(),
-        country: document.getElementById("country").value.trim(),
-        industry: document.getElementById("industry").value,
-        project: document.getElementById("project").value,
-        timeline: document.getElementById("timeline").value,
-        message: document.getElementById("message").value.trim()
-    };
-}
+    const whatsappBtn = document.getElementById("whatsappBtn");
+    const emailBtn = document.getElementById("emailBtn");
+    const statusText = document.getElementById("statusText");
 
-function buildMessage(data) {
+    // Bail out quietly if this page doesn't have the contact form.
+    if (!whatsappBtn || !emailBtn) return;
 
-    return `Hello Astronic Defense,
+    const field = (id) => document.getElementById(id);
+
+    function getFormData() {
+        return {
+            organization: (field("organization")?.value || "").trim(),
+            name: (field("name")?.value || "").trim(),
+            email: (field("email")?.value || "").trim(),
+            phone: (field("phone")?.value || "").trim(),
+            country: (field("country")?.value || "").trim(),
+            industry: field("industry")?.value || "",
+            project: field("project")?.value || "",
+            timeline: field("timeline")?.value || "",
+            message: (field("message")?.value || "").trim()
+        };
+    }
+
+    function buildMessage(data) {
+
+        return `Hello Astronic Defense,
 
 Organization: ${data.organization}
 Representative: ${data.name}
@@ -752,44 +760,60 @@ Timeline: ${data.timeline}
 
 Project Overview:
 ${data.message}`;
+    }
+
+    function setStatus(text) {
+        if (statusText) statusText.textContent = text;
+    }
+
+    // WhatsApp
+    whatsappBtn.addEventListener("click", () => {
+
+        const data = getFormData();
+
+        if (!data.name || !data.email || !data.message) {
+            alert("Please fill Name, Email and Project Overview.");
+            return;
+        }
+
+        setStatus("OPENING WHATSAPP...");
+
+        const text = encodeURIComponent(buildMessage(data));
+
+        window.open(
+            `https://wa.me/919520064368?text=${text}`,
+            "_blank"
+        );
+
+    });
+
+    // Email
+    emailBtn.addEventListener("click", () => {
+
+        const data = getFormData();
+
+        if (!data.name || !data.email || !data.message) {
+            alert("Please fill Name, Email and Project Overview.");
+            return;
+        }
+
+        setStatus("OPENING EMAIL CLIENT...");
+
+        const subject = encodeURIComponent(
+            data.project || "Engineering Inquiry"
+        );
+
+        const body = encodeURIComponent(buildMessage(data));
+
+        window.location.href =
+            `mailto:akhileshpant2004@gmail.com?subject=${subject}&body=${body}`;
+
+    });
+
 }
 
-// WhatsApp
-whatsappBtn.addEventListener("click", () => {
-
-    const data = getFormData();
-
-    if (!data.name || !data.email || !data.message) {
-        alert("Please fill Name, Email and Project Overview.");
-        return;
-    }
-
-    const text = encodeURIComponent(buildMessage(data));
-
-    window.open(
-        `https://wa.me/919520064368?text=${text}`,
-        "_blank"
-    );
-
-});
-
-// Email
-emailBtn.addEventListener("click", () => {
-
-    const data = getFormData();
-
-    if (!data.name || !data.email || !data.message) {
-        alert("Please fill Name, Email and Project Overview.");
-        return;
-    }
-
-    const subject = encodeURIComponent(
-        data.project || "Engineering Inquiry"
-    );
-
-    const body = encodeURIComponent(buildMessage(data));
-
-    window.location.href =
-        `mailto:akhileshpant2004@gmail.com?subject=${subject}&body=${body}`;
-
-});
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initContactDispatch);
+} else {
+    initContactDispatch();
+}
