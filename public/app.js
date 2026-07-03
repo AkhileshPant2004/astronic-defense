@@ -712,3 +712,84 @@ class TargetPool {
 
 }
 
+/*=============================================================================
+    RADAR ENGINE
+=============================================================================*/
+
+/*=============================================================================
+    CONTACT FORM — WHATSAPP / EMAIL DISPATCH
+=============================================================================*/
+
+const whatsappBtn = document.getElementById("whatsappBtn");
+const emailBtn = document.getElementById("emailBtn");
+
+function getFormData() {
+    return {
+        organization: document.getElementById("organization").value.trim(),
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        country: document.getElementById("country").value.trim(),
+        industry: document.getElementById("industry").value,
+        project: document.getElementById("project").value,
+        timeline: document.getElementById("timeline").value,
+        message: document.getElementById("message").value.trim()
+    };
+}
+
+function buildMessage(data) {
+
+    return `Hello Astronic Defense,
+
+Organization: ${data.organization}
+Representative: ${data.name}
+Official Email: ${data.email}
+Phone: ${data.phone}
+Country: ${data.country}
+Industry: ${data.industry}
+Project Type: ${data.project}
+Timeline: ${data.timeline}
+
+Project Overview:
+${data.message}`;
+}
+
+// WhatsApp
+whatsappBtn.addEventListener("click", () => {
+
+    const data = getFormData();
+
+    if (!data.name || !data.email || !data.message) {
+        alert("Please fill Name, Email and Project Overview.");
+        return;
+    }
+
+    const text = encodeURIComponent(buildMessage(data));
+
+    window.open(
+        `https://wa.me/919520064368?text=${text}`,
+        "_blank"
+    );
+
+});
+
+// Email
+emailBtn.addEventListener("click", () => {
+
+    const data = getFormData();
+
+    if (!data.name || !data.email || !data.message) {
+        alert("Please fill Name, Email and Project Overview.");
+        return;
+    }
+
+    const subject = encodeURIComponent(
+        data.project || "Engineering Inquiry"
+    );
+
+    const body = encodeURIComponent(buildMessage(data));
+
+    window.location.href =
+        `mailto:akhileshpant2004@gmail.com?subject=${subject}&body=${body}`;
+
+});
