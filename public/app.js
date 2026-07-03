@@ -573,3 +573,142 @@ class AstronicApp {
 window.addEventListener('DOMContentLoaded', () => {
     window.__astronicApp = new AstronicApp();
 });
+
+/*=============================================================================
+    ASTRONIC DEFENSE
+    TACTICAL RADAR ENGINE
+    High-DPI · Object-Pooled · RAF-Driven Canvas Visualization
+=============================================================================*/
+
+'use strict';
+
+/*=============================================================================
+    CONFIG
+=============================================================================*/
+
+const RADAR_CONFIG = Object.freeze({
+
+    ringCount: 4,
+    sweepSpeed: 0.006,          // radians per ms
+    sweepArc: (Math.PI / 180) * 55,
+    sweepFadeSteps: 90,
+
+    targetCount: 9,
+    targetMinSpeed: 0.00006,
+    targetMaxSpeed: 0.00018,
+    trailLength: 26,
+
+    gridMinorSpacing: 32,
+    gridMajorEvery: 4,
+
+    colorEmerald: '16, 185, 129',
+    colorCrimson: '255, 51, 51',
+    colorGridLine: '255, 255, 255',
+
+    labelFont: '10px "JetBrains Mono", monospace',
+
+});
+
+/*=============================================================================
+    UTILS
+=============================================================================*/
+
+const RadarUtils = {
+
+    rand(min, max) {
+        return min + Math.random() * (max - min);
+    },
+
+    clamp(v, min, max) {
+        return Math.max(min, Math.min(max, v));
+    },
+
+    lerp(a, b, t) {
+        return a + (b - a) * t;
+    },
+
+    dist(x1, y1, x2, y2) {
+        return Math.hypot(x2 - x1, y2 - y1);
+    },
+
+};
+
+/*=============================================================================
+    TRACKED TARGET
+    Represents a single blip orbiting / drifting within the radar field.
+    Pooled and reset rather than reallocated.
+=============================================================================*/
+
+class TrackedTarget {
+
+    constructor() {
+        this.active = false;
+        this.reset(0, 0, 0);
+    }
+
+    reset(cx, cy, maxRadius) {
+
+        this.angle = RadarUtils.rand(0, Math.PI * 2);
+        this.radius = RadarUtils.rand(maxRadius * 0.15, maxRadius * 0.92);
+        this.angularVelocity = RadarUtils.rand(
+            RADAR_CONFIG.targetMinSpeed,
+            RADAR_CONFIG.targetMaxSpeed
+        ) * (Math.random() > 0.5 ? 1 : -1);
+
+        this.radialDrift = RadarUtils.rand(-0.004, 0.004);
+        this.maxRadius = maxRadius;
+        this.cx = cx;
+        this.cy = cy;
+
+        this.id = 'TGT-' + Math.floor(1000 + Math.random() * 8999);
+        this.classification = Math.random() > 0.82 ? 'HOSTILE' : 'FRIENDLY';
+        this.altitude = Math.floor(RadarUtils.rand(800, 42000));
+
+        this.trail = [];
+        this.active = true;
+        this.pulsePhase = Math.random() * Math.PI * 2;
+
+    }
+
+    update(dt) {
+
+        this.angle += this.angularVelocity * dt;
+        this.radius += this.radialDrift * dt;
+        this.radius = RadarUtils.clamp(this.radius, this.maxRadius * 0.12, this.maxRadius * 0.96);
+        this.pulsePhase += dt * 0.004;
+
+        const x = this.cx + Math.cos(this.angle) * this.radius;
+        const y = this.cy + Math.sin(this.angle) * this.radius;
+
+        this.trail.push({ x, y });
+        if (this.trail.length > RADAR_CONFIG.trailLength) {
+            this.trail.shift();
+        }
+
+        this.x = x;
+        this.y = y;
+
+    }
+
+}
+
+/*=============================================================================
+    TARGET POOL
+=============================================================================*/
+
+class TargetPool {
+
+    constructor(size) {
+        this.pool = Array.from({ length: size }, () => new TrackedTarget());
+    }
+
+    activateAll(cx, cy, maxRadius) {
+        this.pool.forEach(t => t.reset(cx, cy, maxRadius));
+    }
+
+    forEach(fn) {
+        this.pool.forEach(fn);
+    }
+
+}
+
